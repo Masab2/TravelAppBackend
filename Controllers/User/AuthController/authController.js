@@ -53,14 +53,32 @@ async function handleUserLogin(req, res) {
       return res.status(401).json({ error: "Invalid email or password" });
     }
 
+    const token = await user.generateAuthToken();
+
+    console.log(token);
+
+    // return The Response To The Client
     return res.status(200).json({
       Status: true,
       Success: "Login Successfully",
       data: user,
+      token: token,
     });
   } catch (error) {
     return res.status(500).json({ error: `${error.message}` });
   }
 }
 
-module.exports = { handleUserRegister, handleUserLogin };
+async function handleGetUserProfile(req, res) {
+  const { userId } = req.query;
+  console.log(req.query);
+  if (!userId) {
+    return res.status(400).json({ error: "Please Enter the User ID" });
+  } else {
+    const result = await User.findById(userId);
+    return res.status(200).json({ Status: true, Success: result });
+  }
+}
+
+
+module.exports = { handleUserRegister, handleUserLogin, handleGetUserProfile };

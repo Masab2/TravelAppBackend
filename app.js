@@ -27,4 +27,4 @@ connectToDb(process.env.MONGO_URL)
     console.log(`Failed to connect to MongoDB ${PORT}`);
   });
 
-app.listen(PORT, () => console.log(`Server Conected ${PORT}`));
+app.listen(PORT, () => console.log(`http://localhost:${PORT}`));
