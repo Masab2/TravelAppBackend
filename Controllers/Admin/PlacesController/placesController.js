@@ -1,7 +1,8 @@
 const placesModel = require("../../../Models/Admin/PlacesModell/TravelPlacesModel");
 
+// Add The Travel Places
 async function handlePostPlaces(req, res) {
-  const { title, description, country, city, pricePerPerson, currency } =
+  const { title, description, country, city, pricePerPerson, currency, category } =
     req.body;
   const image = req.file.filename;
   console.log(req.body);
@@ -13,11 +14,11 @@ async function handlePostPlaces(req, res) {
     !country ||
     !city ||
     !pricePerPerson ||
-    !currency
+    !currency ||
+    !category
   ) {
     return res.status(400).json({ error: "All fields are required" });
   }
-  const imageUrl = `http://localhost:8000/img/${image}`;
   try {
     const places = new placesModel({
       title,
@@ -27,6 +28,7 @@ async function handlePostPlaces(req, res) {
       city,
       pricePerPerson,
       currency,
+      category,
     });
 
     const placesData = await places.save();
@@ -40,6 +42,7 @@ async function handlePostPlaces(req, res) {
   }
 }
 
+// Get All Places
 async function handleGetPlaces(req, res) {
   try {
     const places = await placesModel.find();
@@ -53,4 +56,20 @@ async function handleGetPlaces(req, res) {
   }
 }
 
-module.exports = { handlePostPlaces, handleGetPlaces };
+// Get Places According To Category
+async function handleGetPlacesByCategory(req, res) {
+  const { category } = req.query;
+  try {
+    const places = await placesModel.find({ category });
+    return res.status(200).json({
+      Status: true,
+      Success: "Places Fetched Successfully By Category",
+      data: places,
+    });
+  } catch (error) {
+    return res.status(500).json({ error: error.message });
+  }
+}
+
+
+module.exports = { handlePostPlaces, handleGetPlaces, handleGetPlacesByCategory };

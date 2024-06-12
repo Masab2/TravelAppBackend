@@ -1,6 +1,7 @@
 const {
   handlePostPlaces,
   handleGetPlaces,
+  handleGetPlacesByCategory,
 } = require("../../../Controllers/Admin/PlacesController/placesController");
 
 const express = require("express");
@@ -27,6 +28,11 @@ const upload = multer({ storage: storage });
 
 placeRoutes.post("/addPlace", upload.single("image"), handlePostPlaces);
 
+// Get All Places
 placeRoutes.get("/getAllPlaces", handleGetPlaces);
+
+// Get Places According To Category
+placeRoutes.get("/getPlacesByCategory", handleGetPlacesByCategory);
+
 
 module.exports = placeRoutes;
