@@ -5,6 +5,7 @@ const { connectToDb } = require("./Connections/connection");
 const authModel = require("./Models/User/Auth/userAuthModel");
 const authRoutes = require("./routes/UserRoutes/AuthRoutes/authRoutes");
 const placeRoutes = require("./routes/AdminRoutes/TravelPlacesRoutes/PlacesRoutes");
+const favouriteRoutes = require("./routes/AdminRoutes/FavouriteRoutes/favourite_route")
 const path = require('path');
 const app = express();
 const PORT = process.env.PORT || 8000;
@@ -15,6 +16,8 @@ app.use(express.urlencoded({ extended: true }));
 app.use(body_parser.json());
 app.use("/api", authRoutes);
 app.use("/api", placeRoutes);
+app.use("/api", placeRoutes);
+app.use("/api", favouriteRoutes);
 app.use("/img", express.static(path.join(__dirname, "public/Images")));
 
 

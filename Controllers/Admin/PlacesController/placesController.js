@@ -72,4 +72,6 @@ async function handleGetPlacesByCategory(req, res) {
 }
 
 
+
+
 module.exports = { handlePostPlaces, handleGetPlaces, handleGetPlacesByCategory };
