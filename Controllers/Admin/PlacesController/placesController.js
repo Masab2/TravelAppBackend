@@ -2,8 +2,16 @@ const placesModel = require("../../../Models/Admin/PlacesModell/TravelPlacesMode
 
 // Add The Travel Places
 async function handlePostPlaces(req, res) {
-  const { title, description, country, city, pricePerPerson, currency, category } =
-    req.body;
+  const {
+    title,
+    description,
+    country,
+    city,
+    pricePerPerson,
+    currency,
+    category,
+    bestDestination,
+  } = req.body;
   const image = req.file.filename;
   console.log(req.body);
 
@@ -15,7 +23,8 @@ async function handlePostPlaces(req, res) {
     !city ||
     !pricePerPerson ||
     !currency ||
-    !category
+    !category ||
+    !bestDestination
   ) {
     return res.status(400).json({ error: "All fields are required" });
   }
@@ -29,6 +38,7 @@ async function handlePostPlaces(req, res) {
       pricePerPerson,
       currency,
       category,
+      bestDestination,
     });
 
     const placesData = await places.save();
@@ -45,7 +55,7 @@ async function handlePostPlaces(req, res) {
 // Get All Places
 async function handleGetPlaces(req, res) {
   try {
-    const places = await placesModel.find();
+    const places = await placesModel.find({ bestDestination: true });
     return res.status(200).json({
       Status: true,
       Success: "Places Fetched Successfully",
@@ -71,7 +81,8 @@ async function handleGetPlacesByCategory(req, res) {
   }
 }
 
-
-
-
-module.exports = { handlePostPlaces, handleGetPlaces, handleGetPlacesByCategory };
+module.exports = {
+  handlePostPlaces,
+  handleGetPlaces,
+  handleGetPlacesByCategory,
+};

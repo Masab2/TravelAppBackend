@@ -2,10 +2,7 @@ const favouriteModel = require("../../../Models/Admin/FavouriteModel/favourite_m
 const placesModel = require("../../../Models/Admin/PlacesModell/TravelPlacesModel");
 // Add to Favorites
 async function handleAddToFavorites(req, res) {
-  const {
-    placeId,
-    userId,
-  } = req.body;
+  const { placeId, userId } = req.body;
   console.log(req.body);
   try {
     // Check if the place exists if exists then Return
@@ -15,9 +12,14 @@ async function handleAddToFavorites(req, res) {
     }
 
     // Check if the place is already in the user's favorites
-    const existingFavourite = await favouriteModel.findOne({ userId: userId, title: place.title });
+    const existingFavourite = await favouriteModel.findOne({
+      userId: userId,
+      title: place.title,
+    });
     if (existingFavourite) {
-      return res.status(200).json({ message: "Place already added to favorites" });
+      return res
+        .status(200)
+        .json({ status: true, message: "Place already added to favorites" });
     }
 
     // Add the place to the user's favorites
@@ -33,10 +35,11 @@ async function handleAddToFavorites(req, res) {
       userId: userId,
     });
     await newFavourite.save();
-    return res.status(200).json({ message: "Place added to favorites" });
-
+    return res
+      .status(200)
+      .json({ status: true, message: "Place added to favorites" });
   } catch (error) {
-    return res.status(500).json({ error: error.message });
+    return res.status(500).json({ status: false, error: error.message });
   }
 }
 
@@ -53,4 +56,4 @@ async function handleGetAllFavourites(req, res) {
   }
 }
 
-module.exports = { handleAddToFavorites , handleGetAllFavourites};
+module.exports = { handleAddToFavorites, handleGetAllFavourites };
