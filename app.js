@@ -6,6 +6,7 @@ const authModel = require("./Models/User/Auth/userAuthModel");
 const authRoutes = require("./routes/UserRoutes/AuthRoutes/authRoutes");
 const placeRoutes = require("./routes/AdminRoutes/TravelPlacesRoutes/PlacesRoutes");
 const favouriteRoutes = require("./routes/AdminRoutes/FavouriteRoutes/favourite_route")
+const bookingRoutes = require("./routes/UserRoutes/BookingRoutes/bookingRoutes")
 const path = require('path');
 const app = express();
 const PORT = process.env.PORT || 8000;
@@ -18,6 +19,7 @@ app.use("/api", authRoutes);
 app.use("/api", placeRoutes);
 app.use("/api", placeRoutes);
 app.use("/api", favouriteRoutes);
+app.use("/api", bookingRoutes);
 app.use("/img", express.static(path.join(__dirname, "public/Images")));
 
 

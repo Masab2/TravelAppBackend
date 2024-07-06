@@ -1,17 +1,20 @@
 const User = require("../../../Models/User/Auth/userAuthModel");
 
 async function handleUserRegister(req, res) {
-  const { name, email, password, phone } = req.body;
+  const { firstname, lastname, email, password, phone, city, country} = req.body;
   console.log(req.body);
   try {
-    if (!name || !email || !password || !phone) {
+    if (!firstname || !lastname || !email || !password || !phone || !city || !country) {
       return res.status(400).json({ error: "All fields are required" });
     } else {
       const userModel = new User({
-        name,
+        firstname,
+        lastname,
         email,
         password,
         phone,
+        city,
+        country,
       });
       const userData = await User.findOne({ email });
       if (userData) {

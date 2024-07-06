@@ -52,13 +52,27 @@ async function handlePostPlaces(req, res) {
   }
 }
 
-// Get All Places
-async function handleGetPlaces(req, res) {
+// handel get all Places
+async function handleGetAllPlaces(req, res) {
+  try {
+    const places = await placesModel.find();
+    return res.status(200).json({
+      Status: true,
+      Success: "Places Fetched Successfully",
+      data: places,
+    });
+  } catch (error) {
+    return res.status(500).json({ error: error.message });
+  }
+}
+
+// Get best Destination Places
+async function handleGetBestDestinationPlaces(req, res) {
   try {
     const places = await placesModel.find({ bestDestination: true });
     return res.status(200).json({
       Status: true,
-      Success: "Places Fetched Successfully",
+      Success: "Best Destination Places Fetched Successfully",
       data: places,
     });
   } catch (error) {
@@ -83,6 +97,7 @@ async function handleGetPlacesByCategory(req, res) {
 
 module.exports = {
   handlePostPlaces,
-  handleGetPlaces,
+  handleGetBestDestinationPlaces,
   handleGetPlacesByCategory,
+  handleGetAllPlaces
 };
