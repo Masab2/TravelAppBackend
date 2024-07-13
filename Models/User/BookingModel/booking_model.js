@@ -62,6 +62,22 @@ const bookingSchema = new mongoose.Schema(
       type: Boolean,
       required: true,
     },
+    checkInDate: {
+      type: Date,
+      required: false,
+    },
+    checkOutDate: {
+      type: Date,
+      required: false,
+    },
+    totalAmount: {
+      type: String,
+      required: true,
+    },
+    email: {
+      type: String,
+      required: true,
+    },
   },
   { timestamps: true }
 );
